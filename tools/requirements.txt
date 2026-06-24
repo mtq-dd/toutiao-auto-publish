@@ -1,0 +1,16 @@
+# MCP Server
+mcp[cli]>=1.0.0
+
+# CDP 通信
+websockets>=12.0
+
+# 图片处理
+Pillow>=10.0
+numpy>=1.24
+
+# 中文分词
+jieba>=0.42
+
+# 可选（提升图片检测能力）:
+# opencv-python>=4.8    # 更精准的模糊度检测
+# pytesseract>=0.3      # 图片内文字识别（OCR）

@@ -1,0 +1,59 @@
+{
+  "directory_setup": {
+    "base_dir": "D:\\头条当日热点文章",
+    "articles_root": "D:\\头条当日热点文章\\articles_published",
+    "date_dir_pattern": "articles_published/{year}/{month}/{day}",
+    "article_dir_pattern": "article{N}",
+    "_comment": "发布前自动检查并创建当天目录 D:\\头条当日热点文章\\articles_published\\{year}\\{month}\\{day}\\。article 编号从 1 递增，跳过已存在的（如已有 article1 则创建 article2）"
+  },
+  "confirm_topic": {
+    "value": true,
+    "_comment": "true=选题确认后发布, false=自动选发布",
+    "template": {
+      "true": "先搜索热点，给出 3-5 个选题让用户选择，确认后再写文配图",
+      "false": "搜索热点后自动选择最佳话题，直接写文配图"
+    }
+  },
+
+  "hot_topic": {
+    "_comment": "脚本只提供数据（历史文章、相似度数值、关键词），选题和分类由大模型决策",
+    "script": "D:\\头条当日热点文章\\tools\\hot_topic_manager.py",
+    "check_command": "python {script} check --candidates \"{逗号分隔的候选标题}\" --days 3",
+    "history_command": "python {script} history --days 7",
+
+    "selection_rules": "大模型根据 check 返回的数据自行判断：\n1. 看 most_similar 的 combined 数值和 shared_keywords\n2. 看 time_distance 是 today/yesterday/更早\n3. today 且 combined >= 0.55 → 大概率重复，除非角度完全不同\n4. yesterday 且 combined >= 0.30 → 提醒用户昨天写过相关话题，确认是新角度再写\n5. 更早的 → 不限制\n6. 优先选突发/当日类话题（强时效），持续讨论类找新角度",
+
+    "topic_categories": {
+      "突发/当日": "今天不写就过时的（突发新闻、今日开幕、刚刚公布）。快速出稿，侧重事实。",
+      "持续讨论": "跨天有热度的（国际局势、政策影响、行业趋势）。找新角度、新信息、深度分析。",
+      "一般话题": "不受时效约束的常规热点。正常写作节奏。"
+    }
+  },
+
+  "dedup_topics": {
+    "enabled": true,
+    "_comment": "[已迁移到 hot_topic] 保留兼容字段。实际去重逻辑由 hot_topic.check 执行",
+    "source_dir": "D:\\头条当日热点文章\\articles_published\\{year}\\{month}\\{day}\\",
+    "topic_forbidden_template": "严禁选择以下已发布话题：{topics}"
+  },
+
+  "review_workflow": {
+    "enabled": true,
+    "_comment": "发布前执行 pre_publish_workflow.py Step0 四项审查 + Step2 排版检查。不通过则自动修复后重新审查，循环直到通过才发布",
+    "script": "D:\\头条当日热点文章\\tools\\pre_publish_workflow.py",
+    "template": "写文配图后，按以下步骤执行：\n\n0. 检查并创建目录 D:\\头条当日热点文章\\articles_published\\{year}\\{month}\\{day}\\article{N}（目录不存在则先建年/月/日层级目录，再取最小可用编号）\n\n1. 运行 pre_publish_workflow.py --title \"标题\" --content content.html --images 图片路径列表 --port 9222 --html --auto-publish --mark-ai-generated 完成审查和发布（内部自动串联四项审查→排版检查→发布，配图带AI水印时加 --mark-ai-generated）\n\n2. 如果审查不通过（overall_passed=false），必须根据 blocking_issues 自行修改文章或图片，修改后重新运行 Step 1，循环直到全部通过才可发布"
+  },
+  "mark_ai_generated": {
+    "value": true,
+    "_comment": "发布时是否勾选「引用AI」作品声明。图片为AI生成时设为 true"
+  },
+
+  "daily_report": {
+    "_comment": "每天所有文章发布完成后，生成当日结构化日报，供次日热点去重使用",
+    "script": "D:\\头条当日热点文章\\tools\\daily_report.py",
+    "command": "python {script} --date {date}",
+    "output": "D:\\头条当日热点文章\\articles_published\\{year}\\{month}\\{day}\\daily_report.json",
+    "when": "当天所有文章发布完毕后运行一次（建议在最后一篇发布完成后自动触发）",
+    "workflow": "1. 运行 daily_report.py --date {今天的日期}\n2. 确认输出的文章数与当天实际发布数一致\n3. 如有遗漏，检查 article 目录是否缺少 content.html"
+  }
+}

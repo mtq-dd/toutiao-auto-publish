@@ -1,0 +1,58 @@
+# 凭证和敏感信息
+.credentials/
+account.json
+credentials.json
+secrets.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 日志
+*.log
+
+# 临时文件
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# MCP 配置（包含本地路径）
+mcp_config.local.json
+
+# 已发布文章
+articles_published/
+
+# 上传文件
+.uploads/
+
+# 浏览器缓存和配置文件
+tools/edge_profile/

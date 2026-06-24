@@ -1,0 +1,26 @@
+账号密码：
+17788584475
+Kkk123456
+
+使用说明.md
+AGENT_HANDOFF.md
+
+文章编写要求：
+利用这个工具完成发布任务:发布正常的文字，带上图（3-4张），结合当日热点，做合理评论，发布成功后收集发布文章链接，记录到对应的目录下，补充当前文件链接到txt文件中，如果当天没有，就新建一个。
+
+目录结构（新）：
+articles_published/{year}/{month}/{day}/article{N}/
+  ├── content.html       # 文章正文
+  ├── images/            # 配图
+  └── 文章链接.txt        # 单篇文章的链接 + pgc_id
+
+日期汇总文件（自动生成，发布脚本维护）：
+articles_published/{year}/{month}/{day}/文章链接.txt
+  格式：编号. [标题](链接)  —— 当日所有文章汇总
+
+文章质量要求：按流程脚本来就行
+文章编辑发布页面：
+https://mp.toutiao.com/profile_v4/graphic/publish
+
+文章列表：
+https://mp.toutiao.com/profile_v4/graphic/articles

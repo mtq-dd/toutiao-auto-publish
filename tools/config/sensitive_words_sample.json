@@ -1,0 +1,72 @@
+{
+    "说明": "这是自定义敏感词库模板。将此文件保存为 sensitive_words.json 并通过 --word-db 参数传入。",
+
+    "political": {
+        "severity": "error",
+        "words": [
+        ]
+    },
+    "violence": {
+        "severity": "error",
+        "words": [
+            "恐怖袭击方法",
+            "爆炸物制作",
+            "自杀教程"
+        ]
+    },
+    "pornography": {
+        "severity": "error",
+        "words": [
+            "成人服务",
+            "性交易"
+        ]
+    },
+    "ad_absolute": {
+        "severity": "warning",
+        "words": [
+            "全网最低",
+            "行业领先",
+            "销量第一",
+            "独一无二"
+        ]
+    },
+    "ad_false_claim": {
+        "severity": "error",
+        "words": [
+            "假一赔万",
+            "央视推荐",
+            "明星同款正品"
+        ]
+    },
+    "medical_claim": {
+        "severity": "warning",
+        "words": [
+            "包治百病",
+            "根治不复发",
+            "国家认证疗效"
+        ]
+    },
+    "financial_claim": {
+        "severity": "warning",
+        "words": [
+            "稳赚",
+            "保本",
+            "内部渠道"
+        ]
+    },
+    "clickbait": {
+        "severity": "warning",
+        "words": [
+            "不看后悔一辈子",
+            "是中国人就转"
+        ]
+    },
+    "traffic_diversion": {
+        "severity": "warning",
+        "words": [
+            "加V",
+            "薇信",
+            "卫星号"
+        ]
+    }
+}
